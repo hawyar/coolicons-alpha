@@ -2,9 +2,9 @@ const svgr = require('@svgr/core').default;
 const fetcher = require('./util/fetcher');
 const chalk = require('chalk');
 const fs = require('fs');
-//TODO: get SVG names and id
-// map each svg id to a request for its content
-// generate SVG componenet
+const spicy = require('spicymkdir');
+const path = require('path');
+
 async function getNodes() {
   return new Promise(async (resolve, reject) => {
     try {
@@ -33,78 +33,49 @@ async function getNodes() {
   });
 }
 
-function traverse(o, fn) {
-  for (var i in o) {
-    fn.apply(this, [i, o[i]]);
-    if (o[i] !== null && typeof o[i] == 'object') {
-      traverse(o[i], fn);
-    }
-  }
-}
+// function traverse(o, fn) {
+//   for (var i in o) {
+//     fn.apply(this, [i, o[i]]);
+//     if (o[i] !== null && typeof o[i] == 'object') {
+//       traverse(o[i], fn);
+//     }
+//   }
+// }
 
 function mapNodes() {
-  // here data looks like this
-  // {
-  //   id: "228: 833",
-  //   name: "Arrow",
-  //   type: "FRAME",
-  //   ...,
-  //   children: [ ...icons]
-  // }
   getNodes().then((frame) => {
     console.log(
       `${chalk.green.bold(`Success`)}: Fetched ${frame.length} frames\n`
     );
     const icons = frame.map((node) => {
       console.log(`${chalk.bold(node.name)} - ${node.children.length} icons`);
-      return node.children.map((icon) => {
-        console.log(`${icon.name} - ${icon.id}`);
+      const meta = node.children.map((el) => {
+        return {
+          id: el.name,
+          name: el.id,
+        };
       });
+      return {
+        category: node.name,
+        data: {
+          ...meta,
+        },
+      };
     });
-    fs.writeFile('./output.json', JSON.stringify(icons), (err) => {
-      if (err) {
-        console.error(err);
+
+    const dirPath = 'figma/content';
+
+    spicy.mkdirSync(dirPath);
+    fs.writeFile(
+      path.join(dirPath, `/${dirPath.split('/')[0]}.json`),
+      JSON.stringify(icons),
+      (err) => {
+        if (err) {
+          console.error(err);
+        }
       }
-    });
+    );
   });
 }
 
 mapNodes();
-
-// function mapNodes() {
-//   //   // here data looks like this
-//   //   // {
-//   //   //   id: "228: 833",
-//   //   //   name: "Arrow",
-//   //   //   type: "FRAME",
-//   //   //   ...,
-//   //   //   children: [ ...icons]
-//   //   // }
-//   //   getNodes().then((data) => {
-//   //     console.log();
-//   //     // data.map((node) => {
-//   //     //   console.log(node);
-//   //     //   // traverse(node, (key, val) => {
-//   //     //   //   console.log(key + ' ' + val);
-//   //     //   //   fs.writeFile('./output.json', JSON.stringify({ key, val }), (err) => {
-//   //     //   //     if (err) {
-//   //     //   //       console.error(err);
-//   //     //   //     }
-//   //     //   //   });
-//   //     //   // });
-//   //     // });
-//   //   });
-//   // }
-
-// // this is equivalent to a page in figma
-
-// data.nodes['0:1'].document.children[0].children.map((el) => {
-//   console.log(el.name);
-// });
-
-// // for (const target of Object.entries(
-// //   data.nodes['0:1'].document.children[0].children[0]
-// // )) {
-// //   console.log(target);
-// // }
-// return data;
