@@ -13,7 +13,7 @@ async function getNodes() {
       });
 
       if (data.nodes['0:1'].document.type !== 'CANVAS' || !data) {
-        reject('Unable to fetch figma content');
+        reject('Unable to fetch content');
       }
 
       const IconCanvas = await data.nodes['0:1'].document;
@@ -24,7 +24,7 @@ async function getNodes() {
       });
 
       if (!content) {
-        reject('Unable to fetch figma content');
+        reject('Unable to fetch content');
       }
       resolve(content);
     } catch (e) {
@@ -43,38 +43,48 @@ async function getNodes() {
 // }
 
 function mapNodes() {
-  getNodes().then((frame) => {
-    console.log(
-      `${chalk.green.bold(`Success`)}: Fetched ${frame.length} frames\n`
-    );
-    const icons = frame.map((node) => {
-      console.log(`${chalk.bold(node.name)} - ${node.children.length} icons`);
-      const meta = node.children.map((el) => {
-        return {
-          id: el.name,
-          name: el.id,
-        };
+  return new Promise((resolve, reject) => {
+    try {
+      getNodes().then((frame) => {
+        console.log(
+          `${chalk.green.bold(`Success`)}: Fetched ${frame.length} frames\n`
+        );
+        const icons = frame.map((node) => {
+          console.log(
+            `${chalk.bold(node.name)} - ${node.children.length} icons`
+          );
+          const meta = node.children.map((el) => {
+            return {
+              id: el.id,
+              name: el.name.split('/')[1].trim(),
+            };
+          });
+          return {
+            category: node.name,
+            icons: [...meta],
+          };
+        });
+        if (!icons) reject(`Unable to process icons name or id`);
+
+        resolve(icons);
+
+        const outputDir = 'figma';
+
+        // this should be taken care of better to avoid version clashing with figma
+        spicy.mkdirSync(outputDir);
+        fs.writeFile(
+          path.join(outputDir, `/iconsOutput.json`),
+          JSON.stringify(icons),
+          (err) => {
+            if (err) {
+              console.error(err);
+            }
+          }
+        );
       });
-      return {
-        category: node.name,
-        data: {
-          ...meta,
-        },
-      };
-    });
-
-    const dirPath = 'figma/content';
-
-    spicy.mkdirSync(dirPath);
-    fs.writeFile(
-      path.join(dirPath, `/${dirPath.split('/')[0]}.json`),
-      JSON.stringify(icons),
-      (err) => {
-        if (err) {
-          console.error(err);
-        }
-      }
-    );
+    } catch (e) {
+      reject(e);
+    }
   });
 }
 

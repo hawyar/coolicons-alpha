@@ -1,7 +1,7 @@
 {
   "name": "coolicons",
   "version": "1.0.0",
-  "description": "Coolcions as React components",
+  "description": "Coolicons as React components",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index",
@@ -13,8 +13,10 @@
     "@svgr/core": "^5.4.0",
     "axios": "^0.20.0",
     "camelcase": "^6.0.0",
-    "chalk": "^4.1.0",
     "dotenv": "^8.2.0",
     "spicymkdir": "^1.0.1"
+  },
+  "devDependencies": {
+    "chalk": "^4.1.0"
   }
 }
