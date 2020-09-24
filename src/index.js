@@ -4,6 +4,7 @@ const chalk = require('chalk');
 const fs = require('fs');
 const spicy = require('spicymkdir');
 const path = require('path');
+const camelCase = require('camelcase');
 
 async function getNodes() {
   return new Promise(async (resolve, reject) => {
@@ -33,15 +34,6 @@ async function getNodes() {
   });
 }
 
-// function traverse(o, fn) {
-//   for (var i in o) {
-//     fn.apply(this, [i, o[i]]);
-//     if (o[i] !== null && typeof o[i] == 'object') {
-//       traverse(o[i], fn);
-//     }
-//   }
-// }
-
 function mapNodes() {
   return new Promise((resolve, reject) => {
     try {
@@ -56,7 +48,7 @@ function mapNodes() {
           const meta = node.children.map((el) => {
             return {
               id: el.id,
-              name: el.name.split('/')[1].trim(),
+              name: camelCase(el.name.split('/')[1].trim()),
             };
           });
           return {
@@ -73,7 +65,7 @@ function mapNodes() {
         // this should be taken care of better to avoid version clashing with figma
         spicy.mkdirSync(outputDir);
         fs.writeFile(
-          path.join(outputDir, `/iconsOutput.json`),
+          path.join(outputDir, `/icons.json`),
           JSON.stringify(icons),
           (err) => {
             if (err) {
@@ -87,5 +79,4 @@ function mapNodes() {
     }
   });
 }
-
 mapNodes();
