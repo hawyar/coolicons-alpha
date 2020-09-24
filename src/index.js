@@ -1,4 +1,4 @@
-const svgr = require('@svgr/core').default;
+// import svgr from '@svgr/core';
 const fetcher = require('./util/fetcher');
 const chalk = require('chalk');
 const fs = require('fs');
@@ -79,4 +79,10 @@ function mapNodes() {
     }
   });
 }
+
 mapNodes();
+// function resolve(url) {}
+
+// const sourceMe = `https://s3-us-west-2.amazonaws.com/figma-alpha-api/img/dc07/e579/f7a9f4e074a94fc00f6828d21e037a05`;
+
+// console.log('Coming hot from rollup');

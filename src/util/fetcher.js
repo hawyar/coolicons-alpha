@@ -1,7 +1,7 @@
 const { file, token } = require('../util/resources');
 const axios = require('axios');
 
-async function getFiles() {
+export default async function getFiles() {
   const config = {
     method: 'get',
     url: `https://api.figma.com/v1/files/${file}/nodes?ids=0%3A1`,
@@ -19,7 +19,7 @@ async function getFiles() {
   return figma;
 }
 
-async function getImage(fileID, nodeID) {
+export async function getImage(fileID, nodeID) {
   const config = {
     method: 'get',
     url: `https://api.figma.com/v1/images/${fileID}?ids=${nodeID}&format=svg`,
@@ -34,8 +34,3 @@ async function getImage(fileID, nodeID) {
   return;
 }
 // getImage(file, '167:0');
-
-module.exports = {
-  getFiles,
-  getImage,
-};
