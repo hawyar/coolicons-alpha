@@ -12,7 +12,18 @@ export default [
   // `file` and `format` for each target)
   {
     input: 'src/index.js',
-    output: [{ file: pkg.module, format: 'es' }],
+    output: [
+      {
+        file: pkg.main,
+        format: 'cjs',
+        sourcemap: true,
+      },
+      {
+        file: pkg.module,
+        format: 'esm',
+        sourcemap: true,
+      },
+    ],
     plugins: [
       nodeResolve(), //  resolve used modules
       commonjs(), // convert used modules to an ES module

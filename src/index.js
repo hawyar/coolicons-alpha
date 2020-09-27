@@ -6,6 +6,9 @@ const spicy = require('spicymkdir');
 const path = require('path');
 const camelCase = require('camelcase');
 
+export function add(a, b) {
+  return a + b;
+}
 async function getNodes() {
   return new Promise(async (resolve, reject) => {
     try {
@@ -80,9 +83,9 @@ function mapNodes() {
   });
 }
 
-mapNodes();
-// function resolve(url) {}
+// mapNodes();
 
-// const sourceMe = `https://s3-us-west-2.amazonaws.com/figma-alpha-api/img/dc07/e579/f7a9f4e074a94fc00f6828d21e037a05`;
-
-// console.log('Coming hot from rollup');
+//test it
+export function solver(a, b) {
+  return a + b;
+}
