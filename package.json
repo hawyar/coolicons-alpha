@@ -1,14 +1,10 @@
 {
   "name": "coolicons",
   "version": "1.0.0",
-  "main": "dist/index.esm.js",
-  "module": "dist/index.esm.js",
+  "main": "src/index",
   "description": "Coolicons as React components",
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "test": "node test/test.js",
-    "pretest": "npm run build"
+    "dev": "node src/index"
   },
   "author": "hawyar",
   "license": "ISC",
@@ -20,13 +16,6 @@
     "spicymkdir": "^1.0.1"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^15.1.0",
-    "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^9.0.0",
-    "chalk": "^4.1.0",
-    "rollup": "^2.28.1"
-  },
-  "files": [
-    "dist"
-  ]
+    "chalk": "^4.1.0"
+  }
 }

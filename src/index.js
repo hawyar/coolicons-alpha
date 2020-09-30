@@ -6,9 +6,6 @@ const spicy = require('spicymkdir');
 const path = require('path');
 const camelCase = require('camelcase');
 
-export function add(a, b) {
-  return a + b;
-}
 async function getNodes() {
   return new Promise(async (resolve, reject) => {
     try {
@@ -44,7 +41,9 @@ function mapNodes() {
         console.log(
           `${chalk.green.bold(`Success`)}: Fetched ${frame.length} frames\n`
         );
+        var sum = 0;
         const icons = frame.map((node) => {
+          sum = sum + node.children.length;
           console.log(
             `${chalk.bold(node.name)} - ${node.children.length} icons`
           );
@@ -59,6 +58,7 @@ function mapNodes() {
             icons: [...meta],
           };
         });
+        console.log(` ------- \n  Total icons: ${sum}`);
         if (!icons) reject(`Unable to process icons name or id`);
 
         resolve(icons);
@@ -83,9 +83,10 @@ function mapNodes() {
   });
 }
 
-// mapNodes();
+async function getSVG() {
+  // array
+  const nodes = await mapNodes().then((icons) => icons);
+  const onlyNodes = nodes.map((frame) => frame.icons[0].id);
 
-//test it
-export function solver(a, b) {
-  return a + b;
+  return svgs;
 }
