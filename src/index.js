@@ -43,7 +43,7 @@ function mapNodes() {
         );
         var sum = 0;
         const icons = frame.map((node) => {
-          sum = sum + node.children.length;
+          sum += node.children.length;
           console.log(
             `${chalk.bold(node.name)} - ${node.children.length} icons`
           );
@@ -86,7 +86,8 @@ function mapNodes() {
 async function getSVG() {
   // array
   const nodes = await mapNodes().then((icons) => icons);
-  const onlyNodes = nodes.map((frame) => frame.icons[0].id);
-
-  return svgs;
+  const onlyNodes = nodes.map((frame) => console.log(frame.icons));
+  console.log(onlyNodes);
 }
+
+getSVG();

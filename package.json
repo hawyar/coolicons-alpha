@@ -4,7 +4,7 @@
   "main": "src/index",
   "description": "Coolicons as React components",
   "scripts": {
-    "dev": "node src/index"
+    "start": "node src/index"
   },
   "author": "hawyar",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "spicymkdir": "^1.0.1"
   },
   "devDependencies": {
-    "chalk": "^4.1.0"
+    "chalk": "^4.1.0",
+    "nodemon": "^2.0.4"
   }
 }
