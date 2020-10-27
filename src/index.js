@@ -84,10 +84,13 @@ function mapNodes() {
 }
 
 async function getSVG() {
-  // array
-  const nodes = await mapNodes().then((icons) => icons);
-  const onlyNodes = nodes.map((frame) => console.log(frame.icons));
-  console.log(onlyNodes);
+  // array of nodes
+  const nodes = await mapNodes().then((nodes) =>
+    nodes.map((frame) => {
+      return frame;
+    })
+  );
+  console.log(nodes);
 }
 
 getSVG();
