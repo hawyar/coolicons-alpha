@@ -4,18 +4,20 @@
   "main": "src/index",
   "description": "Coolicons as React components",
   "scripts": {
+    "build": "rollup -c",
     "start": "node src/index"
   },
   "author": "hawyar",
   "license": "ISC",
   "dependencies": {
-    "@svgr/core": "^5.4.0",
     "axios": "^0.20.0",
     "camelcase": "^6.0.0",
     "dotenv": "^8.2.0",
     "spicymkdir": "^1.0.1"
   },
   "devDependencies": {
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-run": "^2.0.2",
     "chalk": "^4.1.0",
     "nodemon": "^2.0.4"
   }

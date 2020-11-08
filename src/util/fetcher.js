@@ -1,5 +1,8 @@
-const { file, token } = require('../util/resources');
-const axios = require('axios');
+import axios from 'axios';
+require('dotenv').config();
+
+const file = process.env.FILE_ID;
+const token = process.env.FIGMA_TOKEN;
 
 async function getFiles() {
   const config = {
@@ -10,7 +13,7 @@ async function getFiles() {
     },
   };
   const figma = await axios(config)
-    .then(function (response) {
+    .then((response) => {
       return response.data;
     })
     .catch(function (error) {
@@ -34,10 +37,4 @@ async function getImage(nodeID) {
   return data;
 }
 
-// test for single svg fetch
-// getImage(file, '167:0').then((e) => console.log(e));
-
-module.exports = {
-  getFiles,
-  getImage,
-};
+export { getFiles, getImage };
