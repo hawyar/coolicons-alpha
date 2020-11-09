@@ -1,10 +1,11 @@
 import spicy from 'spicymkdir';
 import path from 'path';
 import { getFiles, getImage } from './util/fetcher';
-const chalk = require('chalk');
-const fs = require('fs');
+import * as chalk from 'chalk';
+import fs from 'fs';
 const camelCase = require('camelcase');
-
+import icons from '../figma/icons.json';
+import { get } from 'http';
 export default function () {
   console.log('version ' + version);
 }
@@ -68,7 +69,7 @@ function mapNodes() {
 
         const outputDir = 'figma';
 
-        // this should be taken care of better to avoid version clashing with figma
+        // save a copy for now
         spicy.mkdirSync(outputDir);
         fs.writeFile(
           path.join(outputDir, `/icons.json`),
@@ -86,14 +87,14 @@ function mapNodes() {
   });
 }
 
+//for now use local copy
+
 async function getSVG() {
-  // array of nodes
-  const nodes = await mapNodes().then((nodes) =>
-    nodes.map((frame) => {
-      return frame;
-    })
-  );
-  console.log(nodes);
+  const localicons = icons;
+}
+
+function appendLink(icon, link) {
+  return (icon['link'] = link.images);
 }
 
 getSVG();
