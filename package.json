@@ -2,7 +2,7 @@
   "name": "coolicons",
   "version": "1.0.0",
   "main": "src/index",
-  "description": "Coolicons as React components",
+  "description": "",
   "scripts": {
     "dev": "rollup -c -w",
     "build": "rollup -c",
